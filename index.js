@@ -31,8 +31,20 @@ app.get("/cadastro/{:nome}", function(req,res){
 
 })
 
+//rota com parametro em query
+app.get("/lista", function(req,res){
+    //req --> dados enviados pelo cliente
+    var cpf = req.query["cpf"];
+    if (cpf){
+        res.send("<h1>CPF " + cpf + " cadastrado com sucesso!</h1>");
+    }else{
+        res.send("Cadastrado!");
+    }
 
-app.listen(4000,function(erro){  // cria a aplicacao na porta 4000
+})
+
+
+app.listen(process.env.PORT ?? 4000,function(erro){  // cria a aplicacao na porta 4000
     if (erro){
         console.log("Erro ao Iniciar.");
     }else{
