@@ -1,52 +1,28 @@
-const express = require("express"); //importa o modulo express neste arquivo
+const express = require("express"); //importa o módulo express neste arquivo
 const app = express(); //iniciando o express
-const PORT = process.env.PORT || 3000; //porta do servidor
+const path = require('path')
+const PORT = process.env.PORT || 8080;
+
+app.use(express.urlencoded({ extended: true }));
 
 //criando a rota inicial
-app.get("/", function(req,res){
-    res.send("<h1>Bem vindo ao site de Felipe e Igor!</h1>");
+app.get("/", function(req, res) {
+    const filePath = path.join(__dirname, 'index.html')
+    res.sendFile(filePath);
 })
 
-//rota com parametro
-app.get("/consulta/:parametro", function(req,res){
-    //req --> dados enviados pelo cliente
-    //res --> resposta enviada pelo servidor de volta ao cliente
-    res.send("retorno consulta:" + req.params.parametro);
+app.post('/resultado', (req, res) => {
+    const meses = parseInt(req.body.meses);
+    const salario = parseFloat(req.body.salario);
+    const resultado = ((salario / 12) * meses) - 0.07;
+
+    res.send(`<h2>O resultado de ${meses} trabalhados com salário bruto de R$${salario} = R$${resultado.toFixed(2)}</h2><br><a href="/">Voltar</a>`)
 })
 
+console.log("PORT env: ", process.env.port);
 
-//rota com parametro opcional
-app.get("/alunos/{:nome}", function(req,res){
-    //req --> dados enviados pelo cliente
-    var nome = req.params.nome;
-    if (nome){
-        res.send("<h1>Aluno " + nome + "</h1>");
-    }else{
-        res.send("<h1>Nome não informado!</h1>");
-    }
-
-})
-
-//rota com parametro em query
-app.get("/cadastro", function(req,res){
-    //req --> dados enviados pelo cliente
-    var cpf = req.query["cpf"];
-    if (cpf){
-        res.send("<h1>CPF " + cpf + " cadastrado com sucesso!</h1>");
-    }else{
-        res.send("<h1>CPF não informado!</h1>");
-    }
-
-})
-
-
-app.listen(PORT, function(erro){  // cria a aplicacao na porta 3000
-    if (erro){
-        console.log("Erro ao Iniciar.");
-    }else{
-        console.log("Servidor Iniciado.");
-    }
-})
-
-
-
+app.listen(PORT, () => {
+    console.log(`
+                    Servidor rodando na porta $ { PORT }
+                    `);
+});
