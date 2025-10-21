@@ -3,12 +3,7 @@ const app = express(); //iniciando o express
 
 //criando a rota inicial
 app.get("/", function(req,res){
-    res.send("<h1>Bem vindo ao meu site!</h1>");
-})
-
-//rota do cadastro de produtos
-app.get("/produtos", function(req,res){
-    res.send("<h1>Lista de Produtos!</h1>");
+    res.send("<h1>Bem vindo ao site de Felipe e Igor!</h1>");
 })
 
 //rota com parametro
@@ -20,25 +15,25 @@ app.get("/consulta/:parametro", function(req,res){
 
 
 //rota com parametro opcional
-app.get("/cadastro/{:nome}", function(req,res){
+app.get("/alunos/{:nome}", function(req,res){
     //req --> dados enviados pelo cliente
     var nome = req.params.nome;
     if (nome){
-        res.send("<h1>produto " + nome + " criado!</h1>");
+        res.send("<h1>Aluno " + nome + "</h1>");
     }else{
-        res.send("produto criado!");
+        res.send("<h1>Nome não informado!</h1>");
     }
 
 })
 
 //rota com parametro em query
-app.get("/lista", function(req,res){
+app.get("/cadastro", function(req,res){
     //req --> dados enviados pelo cliente
     var cpf = req.query["cpf"];
     if (cpf){
         res.send("<h1>CPF " + cpf + " cadastrado com sucesso!</h1>");
     }else{
-        res.send("Cadastrado!");
+        res.send("<h1>CPF não informado!</h1>");
     }
 
 })
@@ -51,3 +46,4 @@ app.listen(process.env.PORT ?? 4000,function(erro){  // cria a aplicacao na port
         console.log("Servidor Iniciado.");
     }
 })
+
