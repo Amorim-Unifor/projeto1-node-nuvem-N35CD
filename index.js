@@ -26,7 +26,7 @@ app.get('/salario/:valor', (req, res) => {
 })
 
 app.get('/funcionario', (req, res) => {
-    res.send("<h1>Seja bem vindo funcionario</h1>")
+    res.send("<h1>Seja bem vindo funcionario!</h1>")
 })
 
 console.log("PORT env: ", process.env.port);
